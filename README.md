@@ -24,4 +24,10 @@ npm run build
 npm run preview
 ```
 
-`npm run build` checks both TypeScript and the Vue timeline before writing `dist/`. Vite serves on loopback. This workspace has no configured remote deployment target.
+`npm run build` checks both TypeScript and the Vue timeline before writing `dist/`. Vite serves on loopback.
+
+## Vercel deployment
+
+Import `qianqqqqqXZQ/Team10_p19` into Vercel with production branch `main`, framework preset **Vite**, and the repository root (`./`) as the root directory, following the P21 website deployment setup. `vercel.json` sets the build command to `npm run build` and the output directory to `dist`. Keep the install command at its default; no environment variables are required. Once the GitHub integration is connected, pushes to `main` trigger production deployments.
+
+Deploy only the generated `dist/` contents. The `reference-materials/` archive and extraction script are used locally to maintain the checked-in `src/bid-content.json`; the production build does not require them. `.vercelignore` excludes these files, dependencies, and local QA artifacts from CLI source uploads. `.vercel/` stores local deployment metadata and is excluded from Git. Use `npm run build` for production builds; `npm run dev` starts a persistent development server.
