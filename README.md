@@ -2,6 +2,8 @@
 
 The website presents UNNC GRP Team202610, the planned SmartCareer architecture, the delivery schedule, and the experience supporting the team's bid. All system features are proposals, not claims of an implemented recommendation product.
 
+The final **Prototype** section is an interactive React concept with a fixed fictional student profile and three fictional graduate opportunities. Four relative-priority sliders normalise into weights and immediately rerank the examples; all-zero priorities use equal weights. Selecting a role reveals its dimension scores, matched skills and gaps. The growth-feedback suggestion changes weights only after **Apply**, and **Reset priorities** restores equal weights. State lasts only until the page is reloaded. No recruitment service, real dataset or backend is connected; growth and stability scores are illustrative proxy indicators.
+
 ## Content source
 
 The P19 English and Chinese bid snapshots and project plan in `reference-materials/results/` were refreshed from `C:\Users\asus\Desktop\6acf87b98bad522cdc6294e4` on 16 October 2026. The authoritative English and Chinese P19 files were last modified on 16 October 2026 at 03:01:32; the date printed in the bid remains 15 October 2026.
