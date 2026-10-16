@@ -1,0 +1,11 @@
+# Generated report files; keep LaTeX sources and plans in results/.
+/results/*.pdf
+/results/*.aux
+/results/*.log
+/results/*.out
+/results/*.toc
+/results/*.fls
+/results/*.fdb_latexmk
+/results/*.synctex.gz
+/results/*.xdv
+/results/*.dvi

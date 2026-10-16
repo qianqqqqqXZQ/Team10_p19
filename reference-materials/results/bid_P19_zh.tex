@@ -1,0 +1,408 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+% 根据 docs/template/main.tex 的版式与章节结构创建。
+% 正式竞标书；中英文内容同步维护。
+% 中文版对应 bid_P19.tex；修改英文版时必须同步更新本文件。
+% 编译：使用 XeLaTeX，连续编译两次更新目录；Overleaf 配置见根目录 latexmkrc。
+% 成员资料来自 docs/character/；不得用往年成员信息填补未知字段。
+\documentclass[a4paper,12pt]{article}
+% 使用 TeX Live/Overleaf 自带的 Fandol 字体，避免依赖本机中文字体。
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocloft}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\figurename}{图}
+\renewcommand{\labelitemi}{\ensuremath{\bullet}}
+\setlength{\headheight}{16pt}
+\addtolength{\headsep}{-2.5pt}
+% 为较难断行的内容预留少量弹性间距，不改变模板页边距。
+\setlength{\emergencystretch}{3em}
+
+% 统一使用本组名称，不沿用往年模板的组号。
+\newcommand{\BidTeam}{UNNC GRP Team202610}
+\newcommand{\BidDate}{2026 年 10 月 15 日}
+\newcommand{\BidHeaderDate}{2026 年 10 月 15 日}
+\newcommand{\PersonalInformation}[2]{%
+  \subsection*{个人信息}
+  \if\relax\detokenize{#1}\relax\else
+  \noindent\textbf{学号：} #1\\
+  \fi
+  \textbf{邮箱：} #2\par
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\BidTeam}
+\fancyhead[R]{\BidHeaderDate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\BidProjectCode}{P19}
+\newcommand{\BidProjectName}{SmartCareer：基于多维岗位质量评价模型的个性化就业推荐系统}
+\newcommand{\BidTitle}{[\BidProjectCode] 项目竞标书（中文版）}
+\title{\BidTitle}
+\author{\BidTeam}
+\date{\BidDate}
+\hypersetup{pdftitle={[P19] 项目竞标书（中文版）},pdfauthor={UNNC GRP Team202610}}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\tableofcontents
+\newpage
+
+\section{引言}
+\noindent\textbf{项目：} \BidProjectName
+\par\medskip
+UNNC GRP Team202610 在数据准备、模型评估和交互软件开发方面的经历，与 SmartCareer 的主要挑战相契合。Yun Xin NG 的数据工程实习和机器学习项目为处理招聘数据提供基础，Ziqian XIONG 的模型实验及 Flask/React 项目有助于将推荐方法连接到可用的应用。团队其他成员的科研标注、编程、数据库和 CI/CD 技能进一步补充了这些经验。
+
+作为大学生，我们希望帮助同学理解一个岗位为什么适合自己，以及可以进一步发展哪些技能。我们将结合学生画像、技能匹配，以及薪酬、成长、稳定性和技能匹配度的透明评分，让用户探索不同职业偏好如何影响推荐结果。
+
+在 Ziqian XIONG 的带领下，我们将先在浙江毕业生数据子集上演示可解释的推荐流程，再评估趋势预测、职业关系及排序改进。通过共同学习、定期集成和早期导师反馈，我们希望将互补的基础转化为可运行的系统；通过基线对照和学生试用检验推荐效果，并清楚展示历史招聘数据的日期与局限。
+
+\newpage
+\section{团队成员}
+本组由七名成员组成，组长为 Ziqian XIONG。团队的互补优势覆盖数据准备与模型评估、算法实现、应用与数据库开发，以及测试部署和用户沟通。我们将以共同的数据规范、模块接口和集成检查连接这些工作，使研究结果能够落实为可演示的软件。以下简介展示支撑项目方案的成员经历，具体职责见任务分配章节。
+
+我们认为，各竞标小组的学术基础大体相当。因此，我们将更强的领导力与积极主动的投入视为本组的竞争优势：由组长指导共同学习、协调决策，成员主动研究不熟悉的方法、及时提出困难并落实反馈。我们将通过集中开发阶段的每周进度复盘、结对方法讨论和早期演示，将这些优势落实到项目推进中；低负荷阶段使用简短异步简报。
+
+\subsection{Ziqian XIONG}
+\PersonalInformation{20721428}{\href{mailto:scyzx7@nottingham.edu.cn}{\nolinkurl{scyzx7@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 组长\par
+
+\subsection*{个人简介}
+Ziqian XIONG 是宁波诺丁汉大学计算机科学专业本科生，也是本组组长。他的医学图像分割研究涉及模型实现、数据集检查与对比评估，4DGS 工具和 MomoFocus 应用则提供了 Python/Flask 与 React/TypeScript 开发经验。对于 P19，这些经历可为比较技能匹配与排序方法，并将其连接到交互式推荐应用提供基础。个人网站：\url{https://qqqqqprofile.vercel.app/}。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{Pony.ai 算法实习（2026 年 7--9 月）：} 在人工智能部调研 VGGT 相关三维／四维重建方法，针对既有 DA3／3D Gaussian Splatting 流水线开展多视角几何与深度估计对比，完成方案验证、工程集成及原有重建流程替换。另编写智能体辅助开发工作流程文档。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{4DGS-Edit-and-Compare（2026 年 7--9 月）：} 独立开发 4D Gaussian Splatting 点云编辑与对比工具，支持选定区域的旋转、平移和删除，支持多点云编辑、对比与量化评估。\textbf{技术栈：} 后端采用 Python 与 Flask，交互前端采用 JavaScript、Three.js 和 WebGL，使用 NumPy 与 SciPy 进行数值处理、PyTorch 与 plyfile 处理点云文件，并提供 Docker 打包配置，该工具在 Pony.ai 实习期间独立开发，个人网站记载其已被公司使用。\href{https://github.com/qianqqqqqXZQ/4DGS-Edit-and-Compare}{项目仓库}。
+  \item \textbf{MomoFocus（2026 年 9--10 月）：} 开发整合待办事项、备忘录与番茄钟的个人效率应用。\textbf{技术栈：} 界面采用 React、TypeScript 和 CSS，桌面壳采用 Electron，使用 Vite 进行开发与前端构建、electron-builder 进行桌面打包；通过 localStorage 在本地持久化数据，并使用 dnd-kit 实现列表拖拽排序，提供了交互式应用开发与桌面交付经验。\href{https://github.com/qianqqqqqXZQ/MomoFocus}{项目仓库}。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{医学图像分割研究：} 实现、调试 CNN--Transformer 组件，准备和检查数据集，并以 Dice、IoU 及推理速度评估效果。\textbf{技术栈：} Python、PyTorch，以及 OpenMMLab 的 MMSegmentation、MMCV 和 MMEngine。相关论文目前以其为第二作者投稿至 CVIU。
+  \item \textbf{动态双分支神经网络研究：} 正在研究面向关键词识别与说话人验证的多任务网络，探索 early exit 调度与 FPGA 资源再分配。网络设计、调度及资源分配策略仍处于评估阶段。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、C/C++、Java、Haskell、JavaScript、TypeScript、Lean 和 Verilog。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{研究与实现：} PyTorch、OpenMMLab（MMSegmentation、MMCV、MMEngine）、CNN--Transformer 模型、数据预处理与模型对比评估，以及检索增强生成（RAG）。
+  \item \textbf{应用开发：} HTML、CSS、React、Electron、Vite、Flask、Three.js/WebGL、NumPy 和 SciPy。
+  \item \textbf{工程与文档：} Docker 打包、electron-builder，以及智能体辅助开发工作流程的技术文档编写，包括 harness 与 loop engineering。
+\end{itemize}
+
+\subsection{Yun Xin NG}
+\PersonalInformation{20709091}{efyyn8@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Yun Xin NG 是计算机科学专业二年级学生，在马来西亚诺丁汉大学完成第一年学习后，来到宁波诺丁汉大学进行为期一年的交流。她在 YTL AI Labs 实习期间开展多来源数据提取及基于基准的模型选型，机器学习项目则涉及数据集划分和训练。对于 P19，这些经历可为清洗招聘数据、准备评估样例和比较技能趋势预测方法提供基础。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{YTL AI Labs 数据工程实习：} 从网页和 PDF 文档提取数据，根据应用需求筛选开源视觉语言模型，并利用现有基准比较文档理解与文本提取能力，结合基准表现和实际适用性选定模型。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{机器学习项目：} 负责划分训练集与测试集并训练模型，积累数据集准备和实验流程经验。
+  \item \textbf{实习管理系统：} 在大一课程项目中使用 HTML、CSS、Java 和 MySQL 开发应用，将页面开发、应用逻辑与持久化数据相结合。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{Web 与数据库技术：} HTML、CSS 和 MySQL。
+  \item \textbf{数据工程：} 网页与 PDF 数据提取、数据集准备、训练集与测试集划分，以及检索增强生成（RAG）。
+  \item \textbf{模型与 AI 技术：} 模型训练，以及基于基准的视觉语言模型评估与选型。
+\end{itemize}
+
+\subsection{Jinyao LU}
+\PersonalInformation{}{scyl@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Jinyao LU 是宁波诺丁汉大学计算机科学与人工智能专业本科生，具有 LLM 相关研究、技术写作与软件工作流程方面的经历。他在实习中接触平台业务逻辑、信息平台维护与数据记录，也曾参与 AI 黑客松组织。对于 P19，这些经历可支持整理学生需求和组织试用、检查推荐解释，以及准备文档与演示。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{浙江滴石信息技术有限公司研发部门实习（2024 年 7--8 月）：} 学习软件开发流程与平台业务逻辑，调研 VR/AR 技术在水利行业的应用场景。
+  \item \textbf{浙江中控信息产业股份有限公司实习（2025 年 6--8 月）：} 监控列车运行状态，参与信息发布平台日常维护与运营数据记录，学习调度系统操作。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{抖音 AI 黑客松赛事组织（2026 年 3--4 月）：} 作为校园核心组织成员，负责参赛团队对接与赛事流程协调。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{AI 相关研究：} 以第一作者身份撰写的大语言模型与自动驾驶相关论文已获国际期刊录用。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{技术与基础：} NumPy 数据处理、基础 Web 开发、数据结构、算法和软件工程。
+  \item \textbf{开发与报告工具：} C、Java 编程工具的环境配置与基础用法，以及 Excel 图表和 PowerPoint 演示文稿制作。
+  \item \textbf{技术表达：} 学术写作与科研结果展示。
+\end{itemize}
+
+\subsection{Oswald Yiwen CHONG}
+\PersonalInformation{20792699}{\href{mailto:hcyoc1@nottingham.edu.cn}{\nolinkurl{hcyoc1@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Oswald Yiwen CHONG 来自马来西亚，就读于诺丁汉大学计算机科学与人工智能专业。他通过基于区块链的抱石社交应用积累实际应用开发经验，并具备 GitHub 协作与 CI/CD 技能。对于 P19，这些能力可支持连接学生画像、推荐服务与反馈，形成经过测试且部署流程可重复的应用。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{基于区块链的抱石社交应用：} 开发面向抱石运动（bouldering）、类似 Strava 的社交应用，使用区块链向用户发放徽章，并包含 NFT 相关功能，积累了将去中心化技术用于面向用户的应用的实践经验。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{应用技术：} 应用开发、区块链与去中心化技术。
+  \item \textbf{版本控制与协作：} 熟练使用 GitHub 进行版本控制与团队协作。
+  \item \textbf{持续集成与持续部署（CI/CD）：} 能够搭建流水线，支持代码可靠性与软件快速交付。
+\end{itemize}
+
+\subsection{Ziqian ZHANG}
+\PersonalInformation{20721592}{scyzz23@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Ziqian ZHANG 是计算机科学专业大三学生，具有科研中的图像标注与数据准备经历，并具备 Labelme 和 JSON 数据管理技能。对于 P19，我们将这些经验用于准备经核对的技能和职业样本、整理标注，以及记录招聘数据与推荐错误。
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{AI-driven Analysis and Optimization of Performance on Magnets：} 参与该科研项目，承担图像标注和数据准备工作。结合这一经历，她在 Labelme 和 JSON 标注与数据管理方面的技能，可为整理图像标签及结构化标注记录提供基础。这些能力有助于准备带标签样例和评估材料，并关注原始图像与标注信息之间的一致性。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++，具备基础编程能力。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{数据工具与处理：} Labelme、JSON 标注与数据管理、图像标注和数据集准备。
+\end{itemize}
+
+\subsection{Yue WU}
+\PersonalInformation{20717823}{\href{mailto:sgyyw10@nottingham.edu.cn}{\nolinkurl{sgyyw10@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Yue WU 就读于宁波诺丁汉大学计算机科学专业。编程课程实践与 CCN 研究写作为她提供了实现、文献综述和技术分析经验。对于 P19，她的 Python 与数据库基础可支持开发技能归一化规则、四维评分和职业关系，并记录假设、比较不同方法。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{课程开发实践：} 在软件相关课程项目中运用编程与算法问题解决方法，积累了将计算机科学概念转化为实现的经验。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{CCN 研究与技术写作：} 围绕 \emph{The softwarization and interoperability of CCN} 开展研究与论文写作，积累文献综述、技术分析和学术写作经验。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Java、Python、Haskell、C/C++ 和 JavaScript。
+  \item \textbf{Web 与数据库技术：} HTML、CSS、MySQL 和 SQLite。
+  \item \textbf{开发与分析工具：} IntelliJ IDEA、Anaconda、Visual Paradigm、LaTeX 和 MATLAB。
+  \item \textbf{技术分析：} 算法分析、技术文献综述与学术写作。
+\end{itemize}
+
+\subsection{Xinyun HU}
+\PersonalInformation{20720227}{scyxh8@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Xinyun HU 是计算机科学专业大三学生，具备编程、SQL、数据库与 Web 技术基础，并有带 AI 的四子棋项目经历。对于 P19，这些技能可为开发学生画像与偏好表单、展示岗位排序和技能差距，以及检查筛选、权重调整与反馈交互提供基础。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{带 AI 的四子棋游戏（2025 年 7 月）：} 项目背景包括 Connect Four Game with AI，可为讨论算法行为与交互应用之间的关系提供实践切入点。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程与查询语言：} Java、Python、C/C++、Haskell、SQL、MATLAB 和 MIPS Assembly。
+  \item \textbf{Web 与数据库技术：} HTML、CSS、MySQL 和 SQLite。
+  \item \textbf{开发工具：} Git、VS Code、Eclipse 和 Visual Paradigm。
+\end{itemize}
+
+\subsection{团队与本项目的匹配点}
+\begin{itemize}
+  \item \textbf{先建立数据质量，再增加推荐复杂度：} Yun Xin NG 的数据集准备与模型训练经验、Ziqian ZHANG 的科研标注背景，可支撑有文档的数据处理流程和经核对的评估样例，先使真实岗位描述、技能与薪资字段可用，再开展排序。
+  \item \textbf{从透明基线到可用服务：} Ziqian XIONG 的模型对比评估、Yue WU 的 Python／SQLite 与分析背景，以及 Xinyun HU 的编程和数据库基础，为开发、核查技能匹配、质量评分和画像到推荐结果的流程提供基础。Oswald Yiwen CHONG 可支撑 GitHub 协作、自动检查和部署；Jinyao LU 可支撑面向学生的需求整理、试用与演示。
+  \item \textbf{有明确接口的七人协作：} 本组设置数据、算法和应用三个工作单元，明确交接成果，并开展共同集成检查。先在浙江毕业生子集上展示透明基线，再评估趋势、图谱和排序改进。七名成员在三个工作单元中共同承担实现与复核，由组长统一协调接口和交付。
+\end{itemize}
+
+\newpage
+
+\section{构想与设计}
+\subsection{项目方案}
+SmartCareer 将帮助学生理解哪些职业适合自身技能、岗位为何被推荐，以及需要补足哪些技能。学生录入专业、技能、资格、地区及职业优先项，调整薪酬、发展空间、稳定性和技能匹配度的重要程度，获得包含维度评分、解释及技能差距的岗位排序。职业—技能图谱展示相邻职业路径，明确的相关性反馈则用于提出由用户接受后生效的偏好更新。
+
+开发将从研究组招聘数据中的浙江毕业生子集入手，通过分批处理扩展规模。历史记录用于劳动力市场分析和推荐评估，界面展示数据日期并与当前招聘岗位作出区分。核心交付物包括可查询的清洗数据集、技能词典与新职业图谱、有文档的质量模型、经过评估的推荐模块、可运行的 Web 应用，以及最终报告、源代码和演示。
+
+\subsection{技术栈与系统设计}
+\begin{enumerate}
+  \item \textbf{后端开发}\par
+  Python 与 pandas 分批清洗记录，统一薪资周期和区间、处理跨平台重复，并保留来源与转换记录。Parquet 保存离线特征，DuckDB 查询招聘数据，SQLite 存储学生画像、偏好和反馈。FastAPI 提供画像、搜索、推荐、解释、图谱及反馈接口。
+
+  技能词典和同义词规则构成抽取基线。scikit-learn 支持关键词与技能匹配、混合排序和预测对照。按月或季度统计技能占比，比较季节性朴素预测与滞后特征回归，并采用按时间划分的评估。NetworkX 表达职业与技能关系；结合名称、技能组合和需求的持续变化，识别候选新兴职业并进行人工核查。
+
+  四维质量模型分别采用可比岗位薪资分位数、需求与技能趋势、需求持续性与波动，以及学生与岗位的技能匹配度；成长和稳定性明确标注为代理指标。权重非负且总和为一，缺失维度通过明确的覆盖规则处理并展示。混合排序融合匹配度与质量评分，避免重复计算技能匹配；解释使用实际分数和命中技能。以 HR@k、NDCG、MRR 和学生试用比较关键词、纯技能及混合方案。
+
+  \item \textbf{前端开发}\par
+  React 与 TypeScript 实现画像录入、地区及资格筛选、权重控制、推荐排序、分数明细、技能差距、职业关系和反馈。界面通过有文档的 JSON 接口调用 FastAPI，展示数据日期、覆盖情况和无结果提示。偏好调整可查看、可撤销。
+\end{enumerate}
+
+\noindent\textbf{工程与交付：}
+通过 GitHub 审阅和自动检查验证清洗、评分、排序与 API 集成，使用 Docker 打包应用。数据、词典、评分配置和评估划分均进行版本管理，使推荐结果可以复现。七名成员围绕数据、算法和应用交付开展工作，通过结对复核连接各工作单元。
+
+\medskip
+\noindent\textbf{核心数据流：}
+获授权招聘数据 $\rightarrow$ 清洗与技能抽取 $\rightarrow$ Parquet/DuckDB 特征 $\rightarrow$ 趋势与职业图谱 $\rightarrow$ 基于画像的匹配与质量评分 $\rightarrow$ 排序与解释 $\rightarrow$ 用户反馈。
+
+\newpage
+\section{时间安排、工作流程与任务分配}
+\subsection{时间安排与工作流程}
+Ziqian XIONG 将在集中开发阶段主持每周进度与集成检查，低负荷阶段改用简短异步简报，组织结对方法及代码讨论，并通过早期演示获取导师反馈。组长协助成员拆解不熟悉的任务、协调依赖；各成员主动准备问题、及时报告阻碍，并记录决策与后续行动。
+
+本项目自 2026 年 10 月 21 日启动，于 2027 年 4 月 1 日最终提交，按日期区间、任务负荷和阶段成果安排工作。2026 年 12 月 16 日至 2027 年 1 月 5 日用于进度调整与资料整理。考虑一月至二月可能涉及寒假，1 月 6 日至 2 月 28 日按低负荷安排：每人每周至多一项小型异步任务，并按实际可用时间调整，不安排关键集成、必须完成的训练或参与者试用；学校假期日期以正式通知为准。首版可演示流程与先导实验前移至 12 月 15 日前，三月完成集成与评估，3 月 31 日至 4 月 1 日用于提交检查。
+
+课程节点参照所提供的暂定关键日期表安排，并随课程正式通知调整。
+
+\begin{figure}[!ht]
+\centering
+{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|*{7}{c|}}
+\hline
+\textbf{阶段} & \multicolumn{3}{c|}{2026} & \multicolumn{4}{c|}{2027} \\
+\hline
+时间范围 & 10月 & 11月 & 12月 & 1月 & 2月 & 3月 & 4月 \\
+\hline
+1. 需求／数据审查 & \cellcolor{cyan!45}21+ & \cellcolor{cyan!45}1--3 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+2. 清洗／匹配基线 & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}4--24 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+3. 首版流程／先导对照 & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}25+ & \cellcolor{cyan!45}1--15 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+进度调整与资料整理 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{gray!25}16+ & \cellcolor{gray!25}1--5 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+4. 轻量复核／文档 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{yellow!35}6+ & \cellcolor{yellow!35}1+ & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+5. 网页／反馈集成 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}1--9 & \rule{0pt}{1.6ex} \\
+6. 评估／学生试用 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}10--16 & \rule{0pt}{1.6ex} \\
+7. 发布／报告／演示 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}17--30 & \rule{0pt}{1.6ex} \\
+提交检查 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}31 & \cellcolor{cyan!45}1 \\
+\hline
+\end{tabular}}
+}
+\caption{项目进度概览（格内为当月日期；“+”表示延续至月底；浅灰为进度调整与资料整理，浅黄为低负荷阶段）}
+\label{fig:timetable}
+\end{figure}
+
+\begin{itemize}
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 10 月 21 日--11 月 3 日}
+    \begin{itemize}
+      \item 明确学生使用流程、验收标准、招聘数据访问授权及浙江首版子集；检查样例字段、日期、缺失与重复记录，形成数据字典和评估划分草案。
+      \item 测量样例处理的内存与耗时，自 10 月 21 日起准备存储及算力申请；于 10 月 28 日前提交伦理表，覆盖学生画像、反馈、知情同意与拟议试用，在取得所需批准后开展参与者相关工作。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 11 月 4--24 日}
+    \begin{itemize}
+      \item 于 11 月 5 日前上线团队项目网站，展示项目范围、成员职责与进度计划；设计 Parquet/DuckDB 数据存储、画像表及 FastAPI 接口，使用合成画像开发界面。
+      \item 实现分批清洗、薪资周期归一化、跨平台去重、技能词典和关键词匹配；于 11 月 24 日前交付可查询的授权子集、质量统计与可复现的推荐基线。同步准备界面骨架与可复用评估样例。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 11 月 25 日--12 月 15 日}
+    \begin{itemize}
+      \item 实现薪资、成长、稳定性与技能匹配评分、按时间划分的趋势基线及可查询职业--技能图谱；于 12 月 15 日前在授权子集上演示画像录入、资格／地区筛选、可调权重、岗位排序、匹配技能、技能差距及解释。
+      \item 并行准备 React/TypeScript 与 FastAPI 接口骨架、最小显式反馈样例，以及关键词、纯技能和语义匹配先导对照及可复用评估脚本；于 12 月 10 日前依据届时已有证据提交中期报告，12 月 15 日前归档代码／数据版本及集成问题。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 12 月 16 日--2027 年 1 月 5 日}
+    \begin{itemize}
+      \item 这段时间用于整理资料、收集反馈，并按需要完成前面尚未完成的任务，不安排关键工作或参与者试用；1 月 6 日起继续按低负荷推进。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 1 月 6 日--2 月 28 日}
+    \begin{itemize}
+      \item 以独立小任务复核已有技能词典、数据质量记录、评分解释及已保存的先导结果，起草 API 与用户文档；这些任务不作为三月流程推进的阻塞依赖。
+      \item 通过异步简报维护问题清单，基于已有资料整理测试标签、试用说明及三月优先事项；一月至二月不设完整应用交付承诺，3 月 1 日恢复集中集成。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 1--9 日}
+    \begin{itemize}
+      \item 完善已有画像录入、排序、分数明细及图谱页面，显示数据日期与覆盖范围；将偏好保存、收藏和显式反馈接入可撤回、由用户确认的权重更新，补齐 API 与评分版本记录。
+      \item 于 3 月 9 日前演示录入、推荐、解释、反馈及再次推荐；仅在先导对照支持时接入语义匹配，保留可运行基线，不再增加复杂模型范围。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 10--16 日}
+    \begin{itemize}
+      \item 使用预先准备的时间划分、标签与脚本，以 HR@k、NDCG、MRR 比较关键词、纯技能及融合排序，检查技能抽取、趋势误差、图谱实用性及各评价维度的作用。
+      \item 并行开展获准的学生试用与时延／资源检查，优先处理解释不清、无候选及异常权重；于 3 月 16 日前完成评估报告与必要修复。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 17--30 日}
+    \begin{itemize}
+      \item 3 月 17 日起冻结功能与模型，于 3 月 23 日前回归核心流程并在新环境验证 Docker 部署；复现代表性评估结果，补齐授权数据获取、配置、限制与使用说明。
+      \item 3 月 24--30 日排练权重变化、技能差距与职业路径演示，于 3 月 30 日前完成软件发布、源码仓库、最终报告、用户指南及演示材料。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 31 日--4 月 1 日}
+    \begin{itemize}
+      \item 核对发布包、报告与文档的一致性、文件命名、权限及回执，于 4 月 1 日前提交团队最终报告与软件；准备后续课程提交所需的演示、展示及宣传素材。
+    \end{itemize}
+
+\end{itemize}
+
+\clearpage
+
+\subsection{任务分配}
+我们根据已有经历和兴趣安排以下分工，遇到不熟悉的方法时共同学习，并通过进度讨论和导师反馈调整任务。
+\begin{itemize}
+  \item \textbf{Ziqian XIONG：} 协调团队及导师沟通，结合科研和软件项目经历指导系统设计、技能匹配、排序实验与模型集成。
+  \item \textbf{Yun Xin NG：} 结合数据工程和机器学习经历，准备与清洗招聘数据、统一薪资字段，并开展技能趋势预测。
+  \item \textbf{Jinyao LU：} 整理学生需求、组织试用，检查推荐解释是否易于理解，并准备使用文档和演示。
+  \item \textbf{Oswald Yiwen CHONG：} 结合应用开发和 CI/CD 经验，开发后端服务、连接应用模块，并支持 GitHub 协作、自动检查与部署。
+  \item \textbf{Ziqian ZHANG：} 结合科研数据准备经历，整理并核对技能和职业样本、维护标注，并记录数据及推荐错误。
+  \item \textbf{Yue WU：} 开发技能归一化规则、四维评分和职业关系，比较不同方法，并说明评分依据。
+  \item \textbf{Xinyun HU：} 开发学生画像、偏好设置和推荐结果页面，对接后端，并检查筛选、权重调整与反馈交互。
+\end{itemize}
+
+Yun Xin NG 与 Ziqian ZHANG 共同核查数据样本，Yue WU 与 Ziqian XIONG 共同讨论评分和排序结果；应用开发与用户试用将连接这些结果和学生使用体验。
+
+\clearpage
+\section{结论}
+SmartCareer 需要能够连接真实招聘数据、透明评价和学生应用的团队。本组在数据提取、模型实验、编程、数据库、自动化交付和用户协调方面的互补基础，为完成这一任务提供支撑。我们将先展示可复现的基线，再用排序指标和学生试用结果验证改进，使现有数据逐步形成可解释的就业支持工具。
+
+我们希望以扎实的学术准备为基础，通过更强的领导与指导能力、主动学习和持续跟进，成为能够推动项目稳步完成的团队。
+
+\end{document}

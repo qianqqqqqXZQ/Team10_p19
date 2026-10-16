@@ -1,0 +1,432 @@
+% !TeX program = xelatex
+% !TeX encoding = UTF-8
+% 根据 docs/template/main.tex 的版式与章节结构创建。
+% 正式竞标书；中英文内容同步维护。
+% 中文版对应 bid_P21.tex；修改英文版时必须同步更新本文件。
+% 编译：使用 XeLaTeX，连续编译两次更新目录；Overleaf 配置见根目录 latexmkrc。
+% 成员资料来自 docs/character/；不得用往年成员信息填补未知字段。
+\documentclass[a4paper,12pt]{article}
+% 使用 TeX Live/Overleaf 自带的 Fandol 字体，避免依赖本机中文字体。
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{needspace}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocloft}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\figurename}{图}
+\renewcommand{\labelitemi}{\ensuremath{\bullet}}
+\setlength{\headheight}{16pt}
+\addtolength{\headsep}{-2.5pt}
+% 为较难断行的内容预留少量弹性间距，不改变模板页边距。
+\setlength{\emergencystretch}{3em}
+
+% 统一使用本组名称，不沿用往年模板的组号。
+\newcommand{\BidTeam}{UNNC GRP Team 10}
+\newcommand{\BidDate}{2026 年 10 月 15 日}
+\newcommand{\BidHeaderDate}{2026 年 10 月 15 日}
+\newcommand{\PersonalInformation}[2]{%
+  \subsection*{个人信息}
+  \if\relax\detokenize{#1}\relax\else
+  \noindent\textbf{学号：} #1\\
+  \fi
+  \textbf{邮箱：} #2\par
+}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\BidTeam}
+\fancyhead[R]{\BidHeaderDate}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand{\BidProjectCode}{P21}
+\newcommand{\BidProjectName}{人工智能驱动的私募股权投资组合投后季度报告分析}
+\newcommand{\BidTitle}{[\BidProjectCode] 项目竞标书（中文版）}
+\title{\BidTitle}
+\author{\BidTeam}
+\date{\BidDate}
+\hypersetup{pdftitle={[P21] 项目竞标书（中文版）},pdfauthor={UNNC GRP Team 10}}
+
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\tableofcontents
+\newpage
+
+\section{引言}
+\noindent\textbf{项目：} \BidProjectName
+\par\medskip
+我们对 AI 与金融的兴趣，有与 P21 从文档到报告流程直接相关的实践经历作为支撑。Yun Xin NG 曾从 PDF 提取数据，并比较用于文档理解的视觉语言模型；Ziqian XIONG 具有模型实验及 Flask/React 应用开发经验；Jinyao LU 具有 LLM 相关研究和技术写作经历。结合团队的标注、数据库和 CI/CD 技能，这些经验为 UNNC GRP Team 10 开展本项目提供了实践起点。
+
+我们希望将复杂的季度信息转化为清晰、可核查的投后分析依据。系统将连接 PDF/Word 抽取、LLM 结构化、企业与行业分析、同行对标、分级风险及标准化报告生成；关键数字和分析发现能够关联原文，供分析人员审核。
+
+我们将先演示一家企业跨多个季度的完整流程，再扩展分析与报告覆盖范围。Ziqian XIONG 将协调共同学习和早期演示，成员结合已有经验分工，并共同研究不熟悉的方法。财务定义、同行筛选标准和风险规则将结合导师或领域审核者意见制定，系统将通过获授权的样本进行评估。
+
+\medskip
+\noindent\textbf{推荐阅读：本组 P21 竞标方案网站}\par
+我们为 UNNC GRP Team 10 的 P21 竞标方案制作了专门的网站。推荐评审老师结合本竞标书访问以下网站，更便捷地了解我们的方案：\par
+\noindent\url{https://team10-p21.vercel.app/}
+
+\newpage
+\section{团队成员}
+P21 需要文档抽取、可靠分析以及可实际使用的报告应用。本组七名成员的经历分别与这些环节相关，下文将逐一说明。由 Ziqian XIONG 担任组长，我们将通过共同的数据规范、集中开发阶段的每周集成检查和早期演示协调开发；低负荷阶段使用简短异步简报。以下简介展示支撑项目方案的成员经历，具体职责见任务分配章节。
+
+\subsection{Ziqian XIONG}
+\PersonalInformation{20721428}{\href{mailto:scyzx7@nottingham.edu.cn}{\nolinkurl{scyzx7@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 组长\par
+
+\subsection*{个人简介}
+Ziqian XIONG 是宁波诺丁汉大学计算机科学专业本科生，也是本组组长。他的医学图像分割研究涉及模型实现、数据集检查与对比评估，4DGS 工具和 MomoFocus 应用则提供了 Python/Flask 后端与 React/TypeScript 界面开发经验。对于 P21，这些经历可支持抽取方法比较，以及将模型输出与交互式核对、报告应用相连接。个人网站：\url{https://qqqqqprofile.vercel.app/}。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{Pony.ai 算法实习（2026 年 7--9 月）：} 在人工智能部调研 VGGT 相关三维／四维重建方法，针对既有 DA3／3D Gaussian Splatting 流水线开展多视角几何与深度估计对比，完成方案验证、工程集成及原有重建流程替换。另编写智能体辅助开发工作流程文档。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{4DGS-Edit-and-Compare（2026 年 7--9 月）：} 独立开发 4D Gaussian Splatting 点云编辑与对比工具，支持选定区域的旋转、平移和删除，支持多点云编辑、对比与量化评估。\textbf{技术栈：} 后端采用 Python 与 Flask，交互前端采用 JavaScript、Three.js 和 WebGL，使用 NumPy 与 SciPy 进行数值处理、PyTorch 与 plyfile 处理点云文件，并提供 Docker 打包配置，该工具在 Pony.ai 实习期间独立开发，个人网站记载其已被公司使用。\href{https://github.com/qianqqqqqXZQ/4DGS-Edit-and-Compare}{项目仓库}。
+  \item \textbf{MomoFocus（2026 年 9--10 月）：} 开发整合待办事项、备忘录与番茄钟的个人效率应用。\textbf{技术栈：} 界面采用 React、TypeScript 和 CSS，桌面壳采用 Electron，使用 Vite 进行开发与前端构建、electron-builder 进行桌面打包；通过 localStorage 在本地持久化数据，并使用 dnd-kit 实现列表拖拽排序，提供了交互式应用开发与桌面交付经验。\href{https://github.com/qianqqqqqXZQ/MomoFocus}{项目仓库}。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{医学图像分割研究：} 实现、调试 CNN--Transformer 组件，准备和检查数据集，并以 Dice、IoU 及推理速度评估效果。\textbf{技术栈：} Python、PyTorch，以及 OpenMMLab 的 MMSegmentation、MMCV 和 MMEngine。相关论文目前以其为第二作者投稿至 CVIU。
+  \item \textbf{动态双分支神经网络研究：} 正在研究面向关键词识别与说话人验证的多任务网络，探索 early exit 调度与 FPGA 资源再分配。网络设计、调度及资源分配策略仍处于评估阶段。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、C/C++、Java、Haskell、JavaScript、TypeScript、Lean 和 Verilog。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{研究与实现：} PyTorch、OpenMMLab（MMSegmentation、MMCV、MMEngine）、CNN--Transformer 模型、数据预处理与模型对比评估，以及检索增强生成（RAG）。
+  \item \textbf{应用开发：} HTML、CSS、React、Electron、Vite、Flask、Three.js/WebGL、NumPy 和 SciPy。
+  \item \textbf{工程与文档：} Docker 打包、electron-builder，以及智能体辅助开发工作流程的技术文档编写，包括 harness 与 loop engineering。
+\end{itemize}
+
+\subsection{Yun Xin NG}
+\PersonalInformation{20709091}{efyyn8@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Yun Xin NG 是计算机科学专业二年级学生，在马来西亚诺丁汉大学完成第一年学习后，来到宁波诺丁汉大学进行为期一年的交流。在 YTL AI Labs 期间，她从网页和 PDF 提取数据，并利用现有基准比较开源视觉语言模型的文档理解与文本提取能力。这些经历直接契合 P21 的文档解析和模型选型工作。她的机器学习项目及基于 MySQL 的课程应用，也为准备评估样例和存储抽取记录提供了基础。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{YTL AI Labs 数据工程实习：} 从网页和 PDF 文档提取数据，根据应用需求筛选开源视觉语言模型，并利用现有基准比较文档理解与文本提取能力，结合基准表现和实际适用性选定模型。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{机器学习项目：} 负责划分训练集与测试集并训练模型，积累数据集准备和实验流程经验。
+  \item \textbf{实习管理系统：} 在大一课程项目中使用 HTML、CSS、Java 和 MySQL 开发应用，将页面开发、应用逻辑与持久化数据相结合。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{Web 与数据库技术：} HTML、CSS 和 MySQL。
+  \item \textbf{数据工程：} 网页与 PDF 数据提取、数据集准备、训练集与测试集划分，以及检索增强生成（RAG）。
+  \item \textbf{模型与 AI 技术：} 模型训练，以及基于基准的视觉语言模型评估与选型。
+\end{itemize}
+
+\subsection{Jinyao LU}
+\PersonalInformation{}{scyl@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Jinyao LU 是宁波诺丁汉大学计算机科学与人工智能专业本科生，具有 LLM 相关研究和学术写作经历。对于 P21，这些背景可为研究基于证据的报告生成方法、将商定的报告需求转化为模板及审核标准，以及说明评估结果提供了基础。他的 Python/NumPy 和软件工程基础也可支持参与实现与测试。
+
+\subsection*{实习经历}
+\begin{itemize}
+  \item \textbf{浙江滴石信息技术有限公司研发部门实习（2024 年 7--8 月）：} 学习软件开发流程与平台业务逻辑，调研 VR/AR 技术在水利行业的应用场景。
+  \item \textbf{浙江中控信息产业股份有限公司实习（2025 年 6--8 月）：} 监控列车运行状态，参与信息发布平台日常维护与运营数据记录，学习调度系统操作。
+\end{itemize}
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{抖音 AI 黑客松赛事组织（2026 年 3--4 月）：} 作为校园核心组织成员，负责参赛团队对接与赛事流程协调。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{AI 相关研究：} 以第一作者身份撰写的大语言模型与自动驾驶相关论文已获国际期刊录用。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{技术与基础：} NumPy 数据处理、基础 Web 开发、数据结构、算法和软件工程。
+  \item \textbf{开发与报告工具：} C、Java 编程工具的环境配置与基础用法，以及 Excel 图表和 PowerPoint 演示文稿制作。
+  \item \textbf{技术表达：} 学术写作与科研结果展示。
+\end{itemize}
+
+\subsection{Oswald Yiwen CHONG}
+\PersonalInformation{20792699}{\href{mailto:hcyoc1@nottingham.edu.cn}{\nolinkurl{hcyoc1@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Oswald Yiwen CHONG 来自马来西亚，就读于诺丁汉大学计算机科学与人工智能专业。他热衷于开发面向实际应用的软件，愿意在技术挑战与团队协作中持续学习。他通过基于区块链的抱石社交应用积累软件开发经验，并具备 GitHub 协作及 CI/CD 技能。对于 P21，这些能力可支持将报告上传、处理状态、分析和报告导出连接成经过测试的应用，并建立可重复执行的集成检查与部署流程。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{基于区块链的抱石社交应用：} 开发面向抱石运动（bouldering）、类似 Strava 的社交应用，使用区块链向用户发放徽章，并包含 NFT 相关功能，积累了将去中心化技术用于面向用户的应用的实践经验。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{应用技术：} 应用开发、区块链与去中心化技术。
+  \item \textbf{版本控制与协作：} 熟练使用 GitHub 进行版本控制与团队协作。
+  \item \textbf{持续集成与持续部署（CI/CD）：} 能够搭建流水线，支持代码可靠性与软件快速交付。
+\end{itemize}
+
+\subsection{Ziqian ZHANG}
+\PersonalInformation{20721592}{scyzz23@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Ziqian ZHANG 是计算机科学专业大三学生，其科研涉及图像标注与数据准备，并具备 Labelme 和 JSON 标注与数据管理技能。P21 同样需要经过细致核对的参考数据，以评估抽取质量。我们将她的标注和数据整理经验用于报告字段与来源标注，并由第二位审核者共同核查财务数值、单位和报告期间。
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{AI-driven Analysis and Optimization of Performance on Magnets：} 参与该科研项目，承担图像标注和数据准备工作。结合这一经历，她在 Labelme 和 JSON 标注与数据管理方面的技能，可为整理图像标签及结构化标注记录提供基础。这些能力有助于准备带标签样例和评估材料，并关注原始图像与标注信息之间的一致性。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Python、Java 和 C/C++，具备基础编程能力。
+  \item \textbf{数据库：} MySQL。
+  \item \textbf{数据工具与处理：} Labelme、JSON 标注与数据管理、图像标注和数据集准备。
+\end{itemize}
+
+\subsection{Yue WU}
+\PersonalInformation{20717823}{\href{mailto:sgyyw10@nottingham.edu.cn}{\nolinkurl{sgyyw10@nottingham.edu.cn}}}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Yue WU 就读于宁波诺丁汉大学计算机科学专业。她的 CCN 研究与论文写作涉及文献综述和技术分析，并具备 Python、Java 与 SQLite 技能。对于 P21，这些能力可为分析方法调研、实现经审核的季度计算与风险规则，以及记录其假设、支持结果核查提供基础。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{课程开发实践：} 在软件相关课程项目中运用编程与算法问题解决方法，积累了将计算机科学概念转化为实现的经验。
+\end{itemize}
+
+\subsection*{科研经历}
+\begin{itemize}
+  \item \textbf{CCN 研究与技术写作：} 围绕 \emph{The softwarization and interoperability of CCN} 开展研究与论文写作，积累文献综述、技术分析和学术写作经验。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程语言：} Java、Python、Haskell、C/C++ 和 JavaScript。
+  \item \textbf{Web 与数据库技术：} HTML、CSS、MySQL 和 SQLite。
+  \item \textbf{开发与分析工具：} IntelliJ IDEA、Anaconda、Visual Paradigm、LaTeX 和 MATLAB。
+  \item \textbf{技术分析：} 算法分析、技术文献综述与学术写作。
+\end{itemize}
+
+\subsection{Xinyun HU}
+\PersonalInformation{20720227}{scyxh8@nottingham.edu.cn}
+\noindent\textbf{组内角色：} 成员\par
+
+\subsection*{个人简介}
+Xinyun HU 是计算机科学专业大三学生，具备编程、SQL、SQLite 和 Web 技术基础，并有带 AI 的四子棋项目经历。对于 P21，这些技能可为开发连接抽取指标与数据库记录的表单，以及向分析师展示季度比较、缺失数据和审核状态提供基础。
+
+\subsection*{项目经历}
+\begin{itemize}
+  \item \textbf{带 AI 的四子棋游戏（2025 年 7 月）：} 项目背景包括 Connect Four Game with AI，可为讨论算法行为与交互应用之间的关系提供实践切入点。
+\end{itemize}
+
+\subsection*{技能}
+\begin{itemize}
+  \item \textbf{编程与查询语言：} Java、Python、C/C++、Haskell、SQL、MATLAB 和 MIPS Assembly。
+  \item \textbf{Web 与数据库技术：} HTML、CSS、MySQL 和 SQLite。
+  \item \textbf{开发工具：} Git、VS Code、Eclipse 和 Visual Paradigm。
+\end{itemize}
+
+\subsection{团队与本项目的匹配点}
+\begin{itemize}
+  \item \textbf{将 AI 与金融相结合的强烈动力：} 对 AI 与金融分析的共同兴趣，促使我们深入理解软件背后的业务问题。我们将通过定期讨论获授权的报告样例、共同学习财务指标与投后工作流程，以及依据导师或领域审核者反馈持续改进，将这份兴趣落实为具体的项目投入。
+  \item \textbf{PDF 抽取与模型选型：} Yun Xin NG 的 PDF 数据提取及基于基准的文档模型比较经验，直接对应 P21 的首个环节。结合 Ziqian XIONG 的模型实现与对比实验经历，可为在获授权季度报告上测试解析与抽取方案提供基础。
+  \item \textbf{可核查的分析与评估：} Ziqian ZHANG 的标注和 JSON 数据准备经验可用于建立字段与来源参考样例；Yue WU 的编程和技术分析背景，可支持依据领域审核后的算例实现季度比较与风险规则，将数据质量检查与可复现的分析结果相连接。
+  \item \textbf{结构化存储与完整报告应用：} Yun Xin NG 基于 MySQL 的管理系统经验、Ziqian XIONG 的 Flask 和 React/TypeScript 项目、Xinyun HU 的 SQL 与 Web 基础，以及 Oswald Yiwen CHONG 的应用开发和 CI/CD 技能，可支撑数据库、核对界面、集成与部署。Jinyao LU 的 LLM 相关研究和写作经历，可为报告生成方法研究及模板、审核标准的记录提供基础。
+  \item \textbf{明确的财务领域验证路径：} 我们将与导师或领域审核者商定指标定义、报表口径、同行标准和风险规则，再将其落实为经核对的样例、计算和关联证据的输出，使已有软件与 AI 经验能够具体应用于项目的投资分析要求。
+\end{itemize}
+
+\newpage
+
+\section{构想与设计}
+\subsection{项目方案}
+我们将开发一个基于 LLM 的 Web 应用，导入被投企业的季度报告，提取 PDF/Word 文本与表格，将自由文本、财务指标和业务描述结构化存入数据库。系统将分析企业与行业季度变化、进行同行对标和风险分级，并通过 LLM 自动生成标准化投后报告。分析师可核验提取内容并审核生成的报告；关键数据与风险发现均关联原始证据。
+
+首版将围绕一家企业的多个季度，打通报告导入、文本与表格提取、LLM 结构化处理、核验、数据库存储、环比/同比计算与标准化报告自动生成流程。随后整合异常归因和行业季度环境变化，包括政策、市场情绪及赛道变化，以判断企业受益或承压情况。按赛道和发展阶段匹配可比企业，展示相对位置与季度排名变动，并纳入经营、合规、团队变动和业绩对赌（VAM）方面的分级风险。可调整的报告模板将包含继续持有、退出或减值的提示，以及价值创造建议，供分析师审核。
+
+\subsection{技术栈与系统设计}
+% 技术实现通过报告样本、算例与领域审核进行验证。
+\begin{enumerate}
+  \item \textbf{后端开发}\par
+  使用 Python 与 FastAPI 提供导入、核验、分析、报告生成和导出 API。后台解析与模型任务将返回任务 ID，以便跟踪进度。
+
+  \noindent\textbf{存储与来源追溯。}
+  MySQL 将保存企业、报告期间、结构化的自由文本信息、财务指标、业务描述、证据引用、风险规则，以及核验、审核和版本记录。原始 PDF/Word 文件与生成的报告将保存在文件系统或对象存储中；解析后的文本与表格结构初期可使用 MySQL JSON 字段保存。初期无需单独部署 MongoDB 服务。指标将记录原始值与标准化值、币种、单位、单季度/累计及合并/母公司口径、来源位置、核验状态和版本。MySQL \texttt{DECIMAL} 与 Python \texttt{Decimal} 将在明确的舍入规则下保持金额精度。
+
+  \noindent\textbf{解析与提取。}
+  我们将评估 PyMuPDF/pdfplumber 的 PDF 文本与表格提取能力，并使用 python-docx 读取 Word 文本与表格。按需使用 PaddleOCR 处理扫描页与图片文字；对可直接读取的页面优先直接提取。表格 JSON 将保留表头、单元格位置、单位及来源位置。CSV 用于导入导出，而不替代信息更丰富的结构表示。LLM 将依据提取的文本与表格，将自由文本、财务指标和业务描述组织为预定义数据库模式下的结构化数据，并由解析与校验规则辅助。单位、期间与来源检查将把不确定的结果送交人工核验。
+
+  \noindent\textbf{分析与报告生成。}
+  财务比较、同业定位与风险分级将由 Python 计算程序和可配置规则处理。计算将采用可比的报告口径，并明确处理期间缺失以及基期值为零或负数的情况。行业与同业数据必须保留来源和发布日期。LLM 将依据经核验的数据库记录及支持证据，将企业与行业分析、同行对标、分级风险、继续持有/退出/减值提示及价值创造建议自动汇总至标准化投后报告模板。解释将区分报告中已陈述的原因与尚需审核的假设。数值与引用检查将在分析师批准前完成；更正将产生新版本，并使受影响的分析与草稿失效。
+
+  \noindent\textbf{可选的语义检索。}
+  BGE-M3 将支持中英文证据检索，并通过报告样本评估效果与资源占用。FAISS 建立向量索引，片段 ID、来源与版本则保存在 MySQL 中。排序前，按企业、期间、访问权限与有效版本限定证据范围。嵌入向量用于定位原文段落；财务提取和计算由独立流程完成。索引更新与备份应和文档版本保持一致；若过滤或并发需求增加，可考虑 Qdrant。
+
+  \item \textbf{前端开发}\par
+  React 将提供文档上传、任务进度、原文并排核验、趋势图、同业比较、风险证据，以及报告审核与导出界面。FastAPI 响应将提供来源引用、缺失数据与核验状态。未经批准的报告将始终明确标注为草稿。
+\end{enumerate}
+
+\noindent\textbf{开发工具与部署：}
+数据库相关工作使用 JetBrains DataGrip，应用开发使用 PyCharm 或 VS Code，使用 Docker Compose 实现可复现部署。根据提取质量、成本、资源及机密数据处理要求，选择本地部署或通过 API 调用的 LLM。
+
+\medskip
+\noindent\textbf{核心数据流：}
+导入/存储季度报告 $\rightarrow$ 文本与表格提取（按需 OCR）
+$\rightarrow$ LLM 将自由文本、财务指标和业务描述结构化
+$\rightarrow$ 核验并存入 MySQL
+$\rightarrow$ 企业/行业分析、同行对标与风险分级
+$\rightarrow$ LLM 自动生成标准化投后报告
+$\rightarrow$ 数值/来源检查与批准 $\rightarrow$ 导出。
+可选的向量检索提供支持性原文段落。
+
+\medskip
+\noindent\textbf{领域验证与评估：}
+需求分析阶段将与导师建立获授权的样本、指标定义、模板、行业/同业数据、VAM 目标、资源预算及验证标准。明确说明证据缺失情况。评估提取与来源关联的准确性、计算正确性、风险判断错误及报告一致性。在核心流程稳定后加入语义检索。
+
+\newpage
+\section{时间安排、工作流程与任务分配}
+\subsection{时间安排与工作流程}
+Ziqian XIONG 将在集中开发阶段主持每周进度与集成检查，低负荷阶段改用简短异步简报，组织结对方法及代码讨论，并通过早期演示获取导师反馈。组长协助成员拆解不熟悉的任务、协调依赖；各成员主动准备问题、及时报告阻碍，并记录决策与后续行动。
+
+本项目自 2026 年 10 月 21 日启动，于 2027 年 4 月 1 日最终提交，按日期区间、任务负荷和阶段成果安排工作。2026 年 12 月 16 日至 2027 年 1 月 5 日用于进度调整与资料整理。考虑一月至二月可能涉及寒假，1 月 6 日至 2 月 28 日按低负荷安排：每人每周至多一项小型异步任务，并按实际可用时间调整，不安排关键集成、必须完成的训练或参与者试用；学校假期日期以正式通知为准。首版可演示流程与先导实验前移至 12 月 15 日前，三月完成集成与评估，3 月 31 日至 4 月 1 日用于提交检查。
+
+课程节点参照所提供的暂定关键日期表安排，并随课程正式通知调整。
+
+\begin{figure}[!ht]
+\centering
+{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|*{7}{c|}}
+\hline
+\textbf{阶段} & \multicolumn{3}{c|}{2026} & \multicolumn{4}{c|}{2027} \\
+\hline
+时间范围 & 10月 & 11月 & 12月 & 1月 & 2月 & 3月 & 4月 \\
+\hline
+1. 需求／样例审查 & \cellcolor{cyan!45}21+ & \cellcolor{cyan!45}1--3 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+2. 解析／来源核对 & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}4--24 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+3. 首版报告／规则试验 & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}25+ & \cellcolor{cyan!45}1--15 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+进度调整与资料整理 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{gray!25}16+ & \cellcolor{gray!25}1--5 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+4. 轻量复核／文档 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{yellow!35}6+ & \cellcolor{yellow!35}1+ & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} \\
+5. 行业／风险集成 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}1--9 & \rule{0pt}{1.6ex} \\
+6. 准确性／业务复核 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}10--16 & \rule{0pt}{1.6ex} \\
+7. 发布／报告／演示 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}17--30 & \rule{0pt}{1.6ex} \\
+提交检查 & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \rule{0pt}{1.6ex} & \cellcolor{cyan!45}31 & \cellcolor{cyan!45}1 \\
+\hline
+\end{tabular}}
+}
+\caption{项目进度概览（格内为当月日期；“+”表示延续至月底；浅灰为进度调整与资料整理，浅黄为低负荷阶段）}
+\label{fig:timetable}
+\end{figure}
+
+\begin{itemize}
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 10 月 21 日--11 月 3 日}
+    \begin{itemize}
+      \item 明确分析师使用流程、报告模板、指标口径与验收标准；确认企业多季度报告及行业、同行和 VAM 资料的访问授权，试解析一个样例并记录原文位置。
+      \item 评估解析与 LLM 资源需求，自 10 月 21 日起准备算力及存储申请；于 10 月 28 日前提交伦理表，覆盖保密报告、模型／API 数据处理、知情同意及拟议分析师评估，在取得所需批准后开展参与者相关工作。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 11 月 4--24 日}
+    \begin{itemize}
+      \item 于 11 月 5 日前上线团队项目网站，使用项目介绍及非保密示例；设计 MySQL 指标／证据结构、FastAPI 接口与核对界面。
+      \item 实现 PDF/Word 文本与表格抽取、扫描页 OCR、LLM 结构化及单位／期间校验；于 11 月 24 日前交付解析基线和人工核对集，固定首版指标口径。同步准备界面骨架与可复用评估样例。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 11 月 25 日--12 月 15 日}
+    \begin{itemize}
+      \item 实现可比口径的环比／同比计算、缺失期间处理及初步异常规则；于 12 月 15 日前演示单企业多季度的上传、核对、入库、计算及 LLM 报告生成与导出，并检查修正源数字后受影响的分析和报告是否更新。
+      \item 并行准备有来源的行业／同行样例、四类风险规则先导试验、图表及报告审核界面骨架与可复用对照脚本；于 12 月 10 日前依据届时已有证据提交中期报告，12 月 15 日前归档文档版本、试验规则及未解决问题。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2026 年 12 月 16 日--2027 年 1 月 5 日}
+    \begin{itemize}
+      \item 这段时间用于整理资料、收集反馈，并按需要完成前面尚未完成的任务，不安排关键工作或参与者试用；1 月 6 日起继续按低负荷推进。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 1 月 6 日--2 月 28 日}
+    \begin{itemize}
+      \item 以独立小任务复核已有指标口径、来源引用、行业／同行元数据及已保存的风险样例；起草模板、规则库和用户文档，不新增分析模块。
+      \item 通过异步简报维护抽取错误记录，基于已有资料整理测试标准、复核说明及三月优先事项；一月至二月不设完整应用交付承诺，3 月 1 日恢复集中集成。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 1--9 日}
+    \begin{itemize}
+      \item 连接已有行业分析和按赛道／阶段划分的同行比较，展示相对位置与季度排名变化；接入经过试验的经营、合规、团队变化及 VAM 风险规则，保留来源证据并明确提示资料不足。
+      \item 于 3 月 9 日前连接上传／进度、来源核对、图表、风险复核与报告审核导出，包含经审核的持有／退出／减值提示和价值创造建议；完成核心规则库，暂缓可选检索与估值扩展。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 10--16 日}
+    \begin{itemize}
+      \item 使用预先准备的留出企业／期间与核对标准，比较解析与 LLM 抽取，检查来源准确性、单位、单季／累计口径、计算、风险误报／漏报及数字／引用一致性。
+      \item 并行开展获准的分析师或领域复核与可靠性测试，检查访问隔离、修正后的结果更新、证据不足及任务恢复；于 3 月 16 日前完成评估报告与必要修复。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 17--30 日}
+    \begin{itemize}
+      \item 3 月 17 日起冻结功能与规则，于 3 月 23 日前回归导入至导出流程及风险案例，并在新环境验证 Docker Compose 部署；补齐模板、指标、规则、权限、备份与恢复文档。
+      \item 3 月 24--30 日使用授权或匿名化示例排练来源核对、季度／同行变化、分级风险及审核后报告导出，于 3 月 30 日前完成软件、最终报告、可调整模板、规则库与手册。
+    \end{itemize}
+
+  \Needspace{3\baselineskip}
+  \item \textbf{2027 年 3 月 31 日--4 月 1 日}
+    \begin{itemize}
+      \item 核对发布包、报告与文档的一致性、文件命名、权限及回执，于 4 月 1 日前提交团队最终报告与软件；准备后续课程提交所需的演示、展示及宣传素材。
+    \end{itemize}
+
+\end{itemize}
+
+\clearpage
+
+\subsection{任务分配}
+我们根据已有经历和兴趣安排以下分工，遇到不熟悉的方法时共同学习，并通过进度讨论和导师反馈调整任务。
+\begin{itemize}
+  \item \textbf{Ziqian XIONG：} 协调团队及导师沟通，指导系统设计、比较抽取与 LLM 方法，并连接结构化数据和报告生成。
+  \item \textbf{Yun Xin NG：} 结合文档提取和模型评估经历，开发 PDF/Word 文本及表格抽取、比较 OCR 和文档模型，并保留原文位置。
+  \item \textbf{Jinyao LU：} 结合 LLM 研究和写作经历，研究报告需求与模板、参与报告生成，并准备审核样例和文档。
+  \item \textbf{Oswald Yiwen CHONG：} 开发后端服务、数据库存储及报告导出，连接应用模块，并支持自动检查和部署。
+  \item \textbf{Ziqian ZHANG：} 结合科研数据准备经历，整理并核对字段和来源样本、维护标注，并记录抽取及报告错误。
+  \item \textbf{Yue WU：} 实现约定的季度计算、行业与同行比较及风险规则，在导师或领域审核者指导下核对算例并说明方法。
+  \item \textbf{Xinyun HU：} 开发上传、原文核验、对比分析和报告审核页面，对接后端数据，并展示缺失信息与审核状态。
+\end{itemize}
+
+Yun Xin NG 与 Ziqian ZHANG 共同核查抽取样本，Ziqian XIONG 与 Jinyao LU 连接分析结果和报告模板；财务定义及风险解释由导师或领域审核者协助核对。
+
+\clearpage
+\section{结论}
+对 AI 与金融的浓厚兴趣，为我们选择 P21 并深入学习相关领域提供了明确动力。本组已有经历与 P21 从文档到报告的流程相对应：PDF 抽取与文档模型评估、模型实现与实验、标注与结构化数据准备，以及结合 CI/CD 的数据库应用开发。我们将整合这些能力，完成项目要求的解析与报告生成原型、可适配的报告模板，以及季度监控指标体系与风险规则库。
+
+我们将先展示单企业的报告导入、结构化存储、核验和报告生成流程，再扩展企业、行业、同行对标与风险分析。财务定义和投资相关解释将通过导师或领域审核者的反馈进行验证。定期集成检查与早期演示，将把相关经历落实为开发过程中可持续评估的具体成果。
+
+\end{document}

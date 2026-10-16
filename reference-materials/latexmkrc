@@ -1,0 +1,4 @@
+# Use XeLaTeX for both Chinese and English reports on Overleaf.
+$pdf_mode = 5;
+# Also cover builds that explicitly request latexmk's -pdf mode.
+$pdflatex = 'xelatex %O %S';
